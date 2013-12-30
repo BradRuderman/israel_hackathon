@@ -26,13 +26,4 @@ Hackathon::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-
-  config.paperclip_defaults = {
-    :storage => :s3,
-    :s3_credentials => {
-      :bucket => "taglit",
-      :access_key_id => "AKIAJDXG5LWSFPNGYQVQ",
-      :secret_access_key => "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"
-    }
-  }
 end
