@@ -7,8 +7,8 @@ development:
   adapter: mysql2
   encoding: utf8
   database: hackathon_dev
-  username: israel
-  password: root
+  username: root
+  password: radiumone
   host: localhost
   port: 3306
 
