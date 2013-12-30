@@ -4,17 +4,8 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
-    @tickets = Ticket.all
-
-    if !@tickets.nil?
-      @tickets = @tickets.to_a
-
-      # remove image attribute
-      @tickets.map!{|ticket| ticket.attributes.except('image')}
-
-      # sort by created_at datetime
-      @tickets.sort_by! {|ticket| ticket['created_at'] }.reverse
-    end
+    attributes_excluding_image = (Ticket.attribute_names - ['image']).join(', ')
+    @tickets = Ticket.select(attributes_excluding_image).order('created_at DESC')
 
     render json: @tickets.to_json()
   end
@@ -22,9 +13,14 @@ class TicketsController < ApplicationController
   # GET /tickets/1
   # GET /tickets/1.json
   def show
-    @ticket = Ticket.find(params[:id])
+    attributes_excluding_image = (Ticket.attribute_names - ['image']).join(', ')
+    @ticket = Ticket.select(attributes_excluding_image).where(id: params[:id])
+
     render json: @ticket.to_json()
   end
+
+  private
+  def
 
   # GET /tickets/new
   def new
@@ -46,7 +42,7 @@ class TicketsController < ApplicationController
     @ticket.category = obj["category"]
     @ticket.private = obj["private"]
     @ticket.lat = obj["lat"].to_f
-    @ticket.long = obj["long"].to_f
+    @ticket.lon = obj["lon"].to_f
     @ticket.image = obj["image"]
     logger.debug(@ticket)
     if @ticket.save
