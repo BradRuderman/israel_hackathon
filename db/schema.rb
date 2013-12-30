@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131230092415) do
+ActiveRecord::Schema.define(version: 20131230125305) do
 
   create_table "tickets", force: true do |t|
     t.datetime "created_at"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20131230092415) do
     t.decimal  "lat",                            precision: 10, scale: 7
     t.decimal  "long",                           precision: 10, scale: 7
     t.text     "image",       limit: 2147483647
+    t.string   "address"
   end
 
 end
