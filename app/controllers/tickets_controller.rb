@@ -4,17 +4,19 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
-    @tickets = Ticket.all
+    attributes_without_image = (Ticket.attribute_names - ['image']).join(', ')
+    @tickets = Ticket.select(attributes_without_image).order('created_at DESC')
 
-    if !@tickets.nil?
-      @tickets = @tickets.to_a
-
-      # remove image attribute
-      @tickets.map!{|ticket| ticket.attributes.except('image')}
-
-      # sort by created_at datetime
-      @tickets.sort_by! {|ticket| ticket['created_at'] }.reverse
-    end
+    #
+    #if !@tickets.nil?
+    #  @tickets = @tickets.to_a
+    #
+    #  # remove image attribute
+    #  @tickets.map!{|ticket| ticket.attributes.except('image')}
+    #
+    #  # sort by created_at datetime
+    #  @tickets.sort_by! {|ticket| ticket['created_at'] }.reverse
+    #end
 
     render json: @tickets.to_json()
   end
