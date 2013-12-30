@@ -5,6 +5,10 @@ class TicketsController < ApplicationController
   # GET /tickets.json
   def index
     @tickets = Ticket.all
+
+    # sort by created_at datetime
+    @tickets.to_a.sort_by! {|ticket| ticket.created_at }.reverse unless @tickets.nil?
+
     render json: @tickets.to_json()
   end
 

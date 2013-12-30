@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# Create mock tickets
+for n in 0..9  do
+  Ticket.create(description: "Ticket #{n}", created_at: (Time.now - n.minutes))
+end
