@@ -21,9 +21,9 @@ ActiveRecord::Schema.define(version: 20131230125305) do
     t.string   "priority"
     t.string   "category"
     t.string   "private"
-    t.decimal  "lat",         precision: 10, scale: 7
-    t.decimal  "long",        precision: 10, scale: 7
-    t.binary   "image"
+    t.decimal  "lat",                            precision: 10, scale: 7
+    t.decimal  "long",                           precision: 10, scale: 7
+    t.text     "image",       limit: 2147483647
     t.string   "address"
   end
 

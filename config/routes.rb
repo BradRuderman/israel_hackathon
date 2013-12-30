@@ -1,6 +1,7 @@
 Hackathon::Application.routes.draw do
   root 'index#index'
   get 'image/:id' => 'image#index'
+  get 'image_test' => 'image#test'
   resources :tickets
 
   # The priority is based upon order of creation: first created -> highest priority.
