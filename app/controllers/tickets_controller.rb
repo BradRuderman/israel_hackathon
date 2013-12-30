@@ -62,17 +62,6 @@ class TicketsController < ApplicationController
     end
   end
 
-  def update_status
-    obj = JSON[request.body.read]
-    @ticket = Ticket.find(obj["id"])
-    @ticket.status = obj["status"]
-    if @ticket.save
-      render json: @ticket.to_json()
-    else
-      render json: @ticket.errors
-    end
-  end
-
   # DELETE /tickets/1
   # DELETE /tickets/1.json
   def destroy
