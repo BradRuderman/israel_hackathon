@@ -11,11 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131230044316) do
+ActiveRecord::Schema.define(version: 20131230092415) do
 
   create_table "tickets", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.string   "description"
+    t.string   "status"
+    t.string   "priority"
+    t.string   "category"
+    t.string   "private"
+    t.decimal  "lat",                precision: 9, scale: 8
+    t.decimal  "long",               precision: 9, scale: 8
   end
 
 end
