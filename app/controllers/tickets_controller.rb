@@ -5,11 +5,14 @@ class TicketsController < ApplicationController
   # GET /tickets.json
   def index
     @tickets = Ticket.all
+    render json: @tickets.to_json()
   end
 
   # GET /tickets/1
   # GET /tickets/1.json
   def show
+    @ticket = Ticket.find(params[:id])
+    render json: @ticket.to_json()
   end
 
   # GET /tickets/new
@@ -24,16 +27,20 @@ class TicketsController < ApplicationController
   # POST /tickets
   # POST /tickets.json
   def create
-    @ticket = Ticket.new(ticket_params)
-
-    respond_to do |format|
-      if @ticket.save
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @ticket }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
-      end
+    obj = JSON[request.body.read]
+    @ticket = Ticket.new()
+    @ticket.description = obj["description"]
+    @ticket.status = obj["status"]
+    @ticket.priority = obj["priority"]
+    @ticket.category = obj["category"]
+    @ticket.private = obj["private"]
+    @ticket.lat = obj["lat"].to_f
+    @ticket.long = obj["long"].to_f
+    logger.debug(@ticket)
+    if @ticket.save
+      render json: @ticket.to_json()
+    else
+      render json: @ticket.errors
     end
   end
 
