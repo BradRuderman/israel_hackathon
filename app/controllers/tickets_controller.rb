@@ -14,17 +14,14 @@ class TicketsController < ApplicationController
   # GET /tickets/1.json
   def show
     attributes_excluding_image = (Ticket.attribute_names - ['image']).join(', ')
-    @ticket = Ticket.select(attributes_excluding_image).where(id: params[:id])
+    @ticket = Ticket.select(attributes_excluding_image).where(id: params[:id])[0]
 
     render json: @ticket.to_json()
   end
 
-  private
-  def
-
   # GET /tickets/new
   def new
-    @ticket = Ticket.new
+
   end
 
   # GET /tickets/1/edit
@@ -44,7 +41,6 @@ class TicketsController < ApplicationController
     @ticket.lat = obj["lat"].to_f
     @ticket.lon = obj["lon"].to_f
     @ticket.image = obj["image"]
-    logger.debug(@ticket)
     if @ticket.save
       render json: @ticket.to_json()
     else
