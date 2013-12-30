@@ -1,4 +1,4 @@
-var file = document.getElementById("fileToUpload").files[0];
+/*var file = document.getElementById("fileToUpload").files[0];
 var fr = new FileReader;
 
 fr.onload = function() {
@@ -12,4 +12,4 @@ fr.onload = function() {
     var imageData = document.getElementById("cvs").toDataURL("image/jpg").replace("data:image/png;base64,","");
 };
 
-fr.readAsDataURL(file);
+fr.readAsDataURL(file);*/
