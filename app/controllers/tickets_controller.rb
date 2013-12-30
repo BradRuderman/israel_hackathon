@@ -26,6 +26,9 @@ class TicketsController < ApplicationController
     render json: @ticket.to_json()
   end
 
+  private
+  def
+
   # GET /tickets/new
   def new
     @ticket = Ticket.new
