@@ -21,7 +21,6 @@ class TicketsController < ApplicationController
 
   # GET /tickets/new
   def new
-
   end
 
   # GET /tickets/1/edit
@@ -52,7 +51,8 @@ class TicketsController < ApplicationController
   # PATCH/PUT /tickets/1.json
   def update
     respond_to do |format|
-      if @ticket.update(ticket_params)
+      obj = JSON[request.body.read]
+      if @ticket.update(obj)
         format.html { redirect_to @ticket, notice: 'Ticket was successfully updated.' }
         format.json { head :no_content }
       else

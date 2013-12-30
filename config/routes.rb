@@ -4,6 +4,8 @@ Hackathon::Application.routes.draw do
   get 'image_test' => 'image#test'
   resources :tickets
 
+  post 'sms' => 'receive_text#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
