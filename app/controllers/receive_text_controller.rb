@@ -5,8 +5,9 @@ class ReceiveTextController < ApplicationController
 
     message_body = params["Body"]
     from_number = params["From"]
+    logger.debug(message_body)
     @ticket = Ticket.create(description: message_body)
-
+    logger.debug(@ticket.to_yaml)
     redirect_to controller: 'tickets', action: 'show', id: @ticket.id
 
     #render json: {message_body: message_body, from_number: from_number}.to_json()
