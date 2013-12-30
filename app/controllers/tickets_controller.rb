@@ -6,8 +6,15 @@ class TicketsController < ApplicationController
   def index
     @tickets = Ticket.all
 
-    # sort by created_at datetime
-    @tickets.to_a.sort_by! {|ticket| ticket.created_at }.reverse unless @tickets.nil?
+    if !@tickets.nil?
+      @tickets = @tickets.to_a
+
+      # remove image attribute
+      @tickets.map!{|ticket| ticket.attributes.except('image')}
+
+      # sort by created_at datetime
+      @tickets.sort_by! {|ticket| ticket['created_at'] }.reverse
+    end
 
     render json: @tickets.to_json()
   end
