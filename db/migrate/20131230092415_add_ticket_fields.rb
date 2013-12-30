@@ -7,7 +7,7 @@ class AddTicketFields < ActiveRecord::Migration
 	add_column :tickets, :private, :string
     add_column :tickets, :lat, :decimal, :precision => 10, :scale => 7
     add_column :tickets, :long, :decimal, :precision => 10, :scale => 7
-    add_column :tickets, :image, :binary
+    add_column :tickets, :image, :text, :limit => 4294967295
   end
 
   def self.down
