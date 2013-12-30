@@ -47,6 +47,7 @@ class TicketsController < ApplicationController
     @ticket.private = obj["private"]
     @ticket.lat = obj["lat"].to_f
     @ticket.long = obj["long"].to_f
+    @ticket.image = obj["image"]
     logger.debug(@ticket)
     if @ticket.save
       render json: @ticket.to_json()
