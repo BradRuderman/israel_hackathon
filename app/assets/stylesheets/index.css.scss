@@ -1,3 +1,49 @@
 // Place all the styles related to the index controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  background-color: #F2F2F2;
+}
+
+#top-navbar {
+  border-bottom: 2px solid #E48100;
+  background: rgb(255,145,0);
+
+  .navbar-brand {
+    color: #333333;
+  }
+
+  .navbar-brand.hover {
+    color: #000000;
+  }
+
+  li > a {
+    color: white;
+    text-shadow: none;
+    font-size: 16px;
+  }
+
+  li.active > a {
+    background: rgb(255,145,0);
+  }
+
+  li.hover > a {
+    background: #47a447;
+  }
+}
+
+#add-emergency-btn {
+  margin-top:3px;
+  position: absolute;
+  right: 5px;
+}
+
+#completo {
+  border-right: 2px solid #F2F2F2;
+}
+
+#rightSide {
+  .ticket {
+    background-color:blue;
+  }
+}

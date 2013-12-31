@@ -33,7 +33,7 @@ var loadPins = function(){
 var loadDivs = function(){
   _.each(dummyData, function(data){
     if (data.status === true) return;
-    $('#rightSide').append('<div tabindex="-1" id="'+data.id+' oneStory borderGreen"><img class="image" src=" '+data.image+' " width="90px" /><div class="location"> '+data.address+' <div class="description"> '+data.description+'</div><div class="description"> '+data.category+'</div><div class="description"> '+data.priority+'</div><div class="description"> '+data.status+'</div></div><center><button type="button" class="btn btn-primary btn-lg btn-block boton" style="width:90%" onclick="removeDiv(\''+data.id+'\')">Mark as resolved</button></center></div>')
+    $('#rightSide').append('<div tabindex="-1" id="'+data.id+' oneStory borderGreen" class="ticket"><img class="image" src=" '+data.image+' " width="90px" /><div class="location"> '+data.address+' <div class="description"> '+data.description+'</div><div class="description"> '+data.category+'</div><div class="description"> '+data.priority+'</div><div class="description"> '+data.status+'</div></div><center><button type="button" class="btn btn-primary btn-lg btn-block boton" style="width:90%" onclick="removeDiv(\''+data.id+'\')">Mark as resolved</button></center></div>')
   })
   loadPins();
 }
