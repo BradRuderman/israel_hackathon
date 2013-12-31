@@ -47,6 +47,7 @@ var removeDiv = function(pin) {
 }
 
 var addEmergency = function(){
+  
   var id = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   for( var i=0; i < 5; i++ ) {
@@ -122,7 +123,7 @@ var addEmergency = function(){
         "private": false,
         "image": image
       }
-      console.log($('#myModal'));
+      console.log($('#myModal')); 
       $('#myModal').modal('hide');
       document.getElementById('inputForm').reset();
       dummyData[id] = newInput;
