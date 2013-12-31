@@ -39,7 +39,17 @@ var loadDivs = function(data){
 var removeDiv = function(pin) {
   var row = 'row_' + pin;
   document.getElementById(row).remove()
-  markers[pin].setVisible(false)
+  markers[pin].setVisible(false);
+  $.ajax({
+    url: '/tickets/'+pin,
+    type: 'PUT',
+    success: function(response) {
+      console.log(response)
+    },
+    fail: function(res){
+      console.log('err', res)
+    }
+  });
 }
 
 var addEmergency = function(){
