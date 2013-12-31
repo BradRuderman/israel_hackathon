@@ -1,8 +1,62 @@
-<h1>
-	Write backbone code on this hackathon/views/index/index.html.erb
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Jerusalem Disaster</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Police</a></li>
+        <li><a href="#about">Fire</a></li>
+        <li><a href="#contact">Emergency</a></li>
 
-	and replace this....
+      </ul>
 
-	APIs:
-	/tickets
-</h1>
+        <!-- Button trigger modal -->
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Add Emergency</button>
+
+       
+
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+   <!-- Modal -->
+        <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Add Emergency</h4>
+              </div>
+              <div class="modal-body">
+                Mevo HaMatmid 16, Jerusalem, Israel
+                <form id="inputForm">
+                  Address: <input type="text" class="adr required" placeholder="Where is the emergency?" required onkeypress="hideBroken()">
+                  <span class="brokenAddress">Ur address broked</span><br>
+                  Description: <input type="text required" class="desc" placeholder="What is the emergency?"><br>
+                  Category: <input type="checkbox" class="categ" value="Fire">Fire  
+                            <input type="checkbox" class="categ" value="Police">Police  
+                            <input type="checkbox" class="categ" value="Medical">Medical  
+                            <input type="checkbox" class="categ" value="Electricity">Electricity  
+                            <input type="checkbox" class="categ" value="Community">Community  <br>
+                  Priority: <input type="text" class="prior"><br>
+                  <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addEmergency()" class="save" value="save">Save</button>
+                  </div>
+                </form>
+                  Image:  <input type="file" name="fileToUpload" id="fileToUpload" onchange="" class="img"/><br>
+                  <canvas id="cvs" style="display:none"></canvas>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+  <div id="completo"> 
+    <div id="map-canvas" style=""></div>
+  </div>
+  <div id="rightSide" style="overflow:scroll;overflow:auto "></div>

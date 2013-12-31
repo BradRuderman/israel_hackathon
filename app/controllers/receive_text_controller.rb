@@ -2,6 +2,7 @@ class ReceiveTextController < ApplicationController
   def index
     message_body = params["Body"]
     from_number = params["From"]
+    logger.debug(message_body)
 
     # TODO verify parsing works correctly
     address = nil
@@ -12,6 +13,7 @@ class ReceiveTextController < ApplicationController
     end
 
     @ticket = Ticket.create(description: message_body, address: address)
+    logger.debug(@ticket.to_yaml)
 
     redirect_to controller: 'tickets', action: 'show', id: @ticket.id
 
