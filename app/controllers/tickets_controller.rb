@@ -52,16 +52,8 @@ class TicketsController < ApplicationController
   # PATCH/PUT /tickets/1
   # PATCH/PUT /tickets/1.json
   def update
-    respond_to do |format|
       obj = JSON[request.body.read]
-      if @ticket.update(obj)
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
-      end
-    end
+      Ticket.find(params[:id]).destroy()
   end
 
   # DELETE /tickets/1
