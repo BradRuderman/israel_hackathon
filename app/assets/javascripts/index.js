@@ -17,45 +17,33 @@ function initialize() {
 }
 
 var loadPins = function(ticket){
-    if (ticket.status === true) return;
     var myLatlon = new google.maps.LatLng(ticket.lat,ticket.lon);
     var marker = new google.maps.Marker({
       position: myLatlon,
       map: map
     });
+
     markers[ticket.id] = marker;
     google.maps.event.addListener(marker, 'click', function() {
-      var row = $('#' + ticket.id);
-      console.log(row.selector)
-      $(row.selector).focus();
-      // document.getElementById(ticket.id).scrollIntoView()
-      // window.location.hash = '#'+ticket.id;
+      var row = 'row_' + ticket.id
+      document.getElementById(row).scrollIntoView()
     });
 }
 
 var loadDivs = function(data){
   if (data.status === true) return;
   var add = data.address || ' ';
-  console.log(data)
-  $('#rightSide').append('<div tabindex="-1" id="'+data.id+' oneStory borderGreen"><img class="image" src=" '+data.image+' " width="90px" /><div class="location"> '+add+' <div class="description"> '+data.description+'</div><div class="description"> '+data.category+'</div><div class="description"> '+data.priority+'</div><div class="description"> '+data.status+'</div></div><center><button type="button" class="btn btn-primary btn-lg btn-block boton" style="width:90%" onclick="removeDiv(\''+data.id+'\')">Mark as resolved</button></center></div>')
+  $('#rightSide').append('<div tabindex="-1" id="row_'+data.id+'" class="oneStory borderGreen"><img class="image" src="/image/'+data.id+' " width="90px" /><div class="location"> '+add+' <div class="description"> '+data.description+'</div><div class="description"> '+data.category+'</div><div class="description"> '+data.priority+'</div><div class="description"> '+data.status+'</div></div><center><button type="button" class="btn btn-primary btn-lg btn-block boton" style="width:90%" onclick="removeDiv(\''+data.id+'\')">Mark as resolved</button></center></div>')
 }
 
 var removeDiv = function(pin) {
-  // var jPin = $('#' + pin);
-  // console.log(jPin)
-  // jPin.remove();
-  $('.' + pin).remove();
-  // $('#rightSide').remove()
+  var row = 'row_' + pin;
+  document.getElementById(row).remove()
+  markers[pin].setVisible(false)
 }
 
 var addEmergency = function(){
   
-  var id = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  for( var i=0; i < 5; i++ ) {
-    id += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-
   var priority = $('.prior').val()
   var image = $('.img').val()
   
@@ -75,8 +63,8 @@ var addEmergency = function(){
   var geocoder = new google.maps.Geocoder();
   geocoder.geocode( { 'address': address}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      var lat = results[0].geometry.location.ob
-      var lon = results[0].geometry.location.nb
+      var lat = results[0].geometry.location.nb
+      var lon = results[0].geometry.location.ob
       map.setCenter(results[0].geometry.location);
       var marker = new google.maps.Marker({
           map: map,
@@ -90,41 +78,37 @@ var addEmergency = function(){
     var imageData;
 
       fr.onload = function() {
-          var img = new Image;
-          img.onload = function() {
-              var c=document.getElementById("cvs");
-              var ctx=c.getContext("2d");
-              ctx.drawImage(img,0,0,200,180);          
+        var img = new Image;
+        img.onload = function() {
+            var c=document.getElementById("cvs");
+            var ctx=c.getContext("2d");
+            ctx.drawImage(img,0,0,200,180);          
+        }
+
+        img.src = fr.result;
+        setTimeout(function(){
+          imageData = document.getElementById("cvs").toDataURL("image/jpg").replace("data:image/png;base64,","");
+          var newInput = {
+            "lat": lat,
+            "lon": lon,
+            "address": address,
+            "description": description,
+            "priority": priority,
+            "status": "broken",
+            "category": category,
+            "status": false,
+            "private": false,
+            "image": imageData
           }
 
-          img.src = fr.result;
-          setTimeout(function(){
-          imageData = document.getElementById("cvs").toDataURL("image/jpg").replace("data:image/png;base64,","");
+          var sendInput = JSON.stringify(newInput)
+          $.post('/tickets', sendInput, function(data){
+            loadDivs(data);
+            loadPins(data);
+          })
 
-
-
-        var newInput = {
-          "id": id,
-          "lat": lat,
-          "lon": lon,
-          "address": address,
-          "description": description,
-          "priority": priority,
-          "status": "broken",
-          "category": category,
-          "status": false,
-          "private": false,
-          "image": imageData
-        }
-        loadPins(newInput);
-        var sendInput = JSON.stringify(newInput)
-        $.post('/tickets', sendInput, function(data){
-          console.log(data)
-        })
-
-        document.getElementById('inputForm').reset();
-        // dummyData[id] = newInput;
-      }, 3000);
+          document.getElementById('inputForm').reset();
+        }, 3000);
       };
       fr.readAsDataURL(file);
     
@@ -137,5 +121,3 @@ var addEmergency = function(){
 var hideBroken = function () {
   $('.brokenAddress').hide();
 }
-
-google.maps.event.addDomListener(window, 'load', initialize);

@@ -33,6 +33,7 @@ class TicketsController < ApplicationController
     obj = JSON[request.body.read]
     @ticket = Ticket.new()
     @ticket.description = obj["description"]
+    @ticket.address = obj["address"]
     @ticket.status = obj["status"]
     @ticket.priority = obj["priority"]
     @ticket.category = obj["category"]
