@@ -8,34 +8,36 @@ function initialize() {
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
-  loadDivs();
+  $.get('/tickets', function(tickets){
+    _.each(tickets, function(ticket){
+      loadDivs(ticket);
+      loadPins(ticket);
+    })
+  });
 }
 
-var loadPins = function(){
-  _.each(dummyData, function(data){
-    if (data.status === true) return;
-    var myLatlon = new google.maps.LatLng(data.lat,data.lon);
+var loadPins = function(ticket){
+    if (ticket.status === true) return;
+    var myLatlon = new google.maps.LatLng(ticket.lat,ticket.lon);
     var marker = new google.maps.Marker({
       position: myLatlon,
       map: map
     });
-    markers[data.id] = marker;
+    markers[ticket.id] = marker;
     google.maps.event.addListener(marker, 'click', function() {
-      var row = $('#' + data.id);
+      var row = $('#' + ticket.id);
       console.log(row.selector)
       $(row.selector).focus();
-      // document.getElementById(data.id).scrollIntoView()
-      // window.location.hash = '#'+data.id;
+      // document.getElementById(ticket.id).scrollIntoView()
+      // window.location.hash = '#'+ticket.id;
     });
-  })
 }
 
-var loadDivs = function(){
-  _.each(dummyData, function(data){
-    if (data.status === true) return;
-    $('#rightSide').append('<div tabindex="-1" id="'+data.id+' oneStory borderGreen"><img class="image" src=" '+data.image+' " width="90px" /><div class="location"> '+data.address+' <div class="description"> '+data.description+'</div><div class="description"> '+data.category+'</div><div class="description"> '+data.priority+'</div><div class="description"> '+data.status+'</div></div><center><button type="button" class="btn btn-primary btn-lg btn-block boton" style="width:90%" onclick="removeDiv(\''+data.id+'\')">Mark as resolved</button></center></div>')
-  })
-  loadPins();
+var loadDivs = function(data){
+  if (data.status === true) return;
+  var add = data.address || ' ';
+  console.log(data)
+  $('#rightSide').append('<div tabindex="-1" id="'+data.id+' oneStory borderGreen"><img class="image" src=" '+data.image+' " width="90px" /><div class="location"> '+add+' <div class="description"> '+data.description+'</div><div class="description"> '+data.category+'</div><div class="description"> '+data.priority+'</div><div class="description"> '+data.status+'</div></div><center><button type="button" class="btn btn-primary btn-lg btn-block boton" style="width:90%" onclick="removeDiv(\''+data.id+'\')">Mark as resolved</button></center></div>')
 }
 
 var removeDiv = function(pin) {
@@ -114,14 +116,14 @@ var addEmergency = function(){
           "private": false,
           "image": imageData
         }
-
+        loadPins(newInput);
         var sendInput = JSON.stringify(newInput)
         $.post('/tickets', sendInput, function(data){
           console.log(data)
         })
 
         document.getElementById('inputForm').reset();
-        dummyData[id] = newInput;
+        // dummyData[id] = newInput;
       }, 3000);
       };
       fr.readAsDataURL(file);
