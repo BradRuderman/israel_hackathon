@@ -52,8 +52,9 @@ class TicketsController < ApplicationController
   # PATCH/PUT /tickets/1
   # PATCH/PUT /tickets/1.json
   def update
-      obj = JSON[request.body.read]
-      Ticket.find(params[:id]).destroy()
+      a = Ticket.find(params[:id])
+      a.destroy()
+      render json: "success"
   end
 
   # DELETE /tickets/1
