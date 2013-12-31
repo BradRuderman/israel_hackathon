@@ -41,6 +41,7 @@ class TicketsController < ApplicationController
     @ticket.lon = obj["lon"].to_f
     @ticket.image = obj["image"]
     if @ticket.save
+      @ticket.image = nil
       render json: @ticket.to_json()
     else
       render json: @ticket.errors
