@@ -6,10 +6,10 @@ class ReceiveTextController < ApplicationController
 
     # TODO verify parsing works correctly
     address = nil
-    address_line = message_body[/address:.*/]
+    address_line = message_body[/Address:.*$/]
     if !address_line.nil?
-      address = address_line.split(/address:\s*/).second
-      message_body = message_body.split(/address:.*/).second
+      address = address_line.split(/Address:\s*/).second
+      message_body = message_body.split(/"#{address_line}"/).second
     end
 
     @ticket = Ticket.create(description: message_body, address: address)
