@@ -81,6 +81,8 @@ var addEmergency = function(){
           position: results[0].geometry.location
       });
 
+    $('#myModal').modal('hide');
+
     var file = document.getElementById("fileToUpload").files[0];
     var fr = new FileReader;
     var imageData;
@@ -92,35 +94,35 @@ var addEmergency = function(){
               var ctx=c.getContext("2d");
               ctx.drawImage(img,0,0,200,180);          
           }
+
           img.src = fr.result;
+          setTimeout(function(){
           imageData = document.getElementById("cvs").toDataURL("image/jpg").replace("data:image/png;base64,","");
 
 
 
-      var newInput = {
-        "id": id,
-        "lat": lat,
-        "lon": lon,
-        "address": address,
-        "description": description,
-        "priority": priority,
-        "status": "broken",
-        "category": category,
-        "status": false,
-        "private": false,
-        "image": imageData
-      }
+        var newInput = {
+          "id": id,
+          "lat": lat,
+          "lon": lon,
+          "address": address,
+          "description": description,
+          "priority": priority,
+          "status": "broken",
+          "category": category,
+          "status": false,
+          "private": false,
+          "image": imageData
+        }
 
-      var sendInput = JSON.stringify(newInput)
-      $.post('/tickets', sendInput, function(data){
-        console.log(data)
-      })
+        var sendInput = JSON.stringify(newInput)
+        $.post('/tickets', sendInput, function(data){
+          console.log(data)
+        })
 
-      console.log($('#myModal'));
-      $('#myModal').modal('hide');
-      document.getElementById('inputForm').reset();
-      dummyData[id] = newInput;
-      
+        document.getElementById('inputForm').reset();
+        dummyData[id] = newInput;
+      }, 3000);
       };
       fr.readAsDataURL(file);
     
