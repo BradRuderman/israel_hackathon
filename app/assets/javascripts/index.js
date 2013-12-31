@@ -67,35 +67,6 @@ var addEmergency = function(){
   }
 
   var file = document.getElementsByClassName("img")[0].value;
-  var fr = new FileReader;
-
-  if(file != null){
-  fr.onload = function() {
-    var img = new Image;
-    img.onload = function() {
-        var c=document.getElementById("cvs");
-        var ctx=c.getContext("2d");
-        ctx.drawImage(img,0,0,200,180);          
-    }
-    img.src = fr.result;
-    var imageData = document.getElementById("cvs").toDataURL("image/jpg").replace("data:image/png;base64,","");
-
-    fr.readAsDataURL(file);
-    $.support.cors = true;
-    $.ajax({
-          url: "/tickets",
-          type: "POST",
-          crossDomain: true,
-          data: imageData,
-          success: function(data){
-            console.log(data)
-          },
-          error:function(err){
-            alert("Error", err);
-          }
-        })
-  }
-    };
 
   var address = $('.adr').val();
   var geocoder = new google.maps.Geocoder();
@@ -109,6 +80,22 @@ var addEmergency = function(){
           position: results[0].geometry.location
       });
 
+    var file = document.getElementById("fileToUpload").files[0];
+    var fr = new FileReader;
+    var imageData;
+
+      fr.onload = function() {
+          var img = new Image;
+          img.onload = function() {
+              var c=document.getElementById("cvs");
+              var ctx=c.getContext("2d");
+              ctx.drawImage(img,0,0,200,180);          
+          }
+          img.src = fr.result;
+          imageData = document.getElementById("cvs").toDataURL("image/jpg").replace("data:image/png;base64,","");
+
+
+
       var newInput = {
         "id": id,
         "lat": lat,
@@ -120,12 +107,21 @@ var addEmergency = function(){
         "category": category,
         "status": false,
         "private": false,
-        "image": image
+        "image": imageData
       }
+
+      var sendInput = JSON.stringify(newInput)
+      $.post('/tickets', sendInput, function(data){
+        console.log(data)
+      })
+
       console.log($('#myModal'));
-      $('#myModal').modal('hide');
+      // $('#myModal').modal('hide');
       document.getElementById('inputForm').reset();
       dummyData[id] = newInput;
+      
+      };
+      fr.readAsDataURL(file);
     
     } else {
       $('.brokenAddress').show();
