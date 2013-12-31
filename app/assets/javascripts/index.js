@@ -33,7 +33,7 @@ var loadPins = function(ticket){
 var loadDivs = function(data){
   if (data.status === true) return;
   var add = data.address || ' ';
-  $('#rightSide').append('<div tabindex="-1" id="row_'+data.id+'" class="oneStory borderGreen" class="ticket"><img class="image" src="/image/'+data.id+' " width="90px" /><div class="location"> '+add+' <div class="description"> '+data.description+'</div><div class="description"> '+data.category+'</div><div class="description"> '+data.priority+'</div><div class="description"> '+data.status+'</div></div><center><button type="button" class="btn btn-primary btn-lg btn-block boton" style="width:90%" onclick="removeDiv(\''+data.id+'\')">Mark as resolved</button></center></div>')
+  $('#rightSide').append('<div tabindex="-1" id="row_'+data.id+' oneStory borderGreen " class="ticket"><img class="image" src="/image/'+data.id+' " width="90px" /><div class="location"> '+add+' <div class="description"> '+data.description+'</div><div class="description"> '+data.category+'</div><div class="description"> '+data.priority+'</div><div class="description"> '+data.status+'</div></div><center><button type="button" class="btn btn-primary btn-lg btn-block boton" style="width:200px" onclick="removeDiv(\''+data.id+'\')">Mark as Resolved</button></center></div>')
 }
 
 var removeDiv = function(pin) {
